@@ -1,0 +1,19 @@
+[project]
+name = "nn-weathermap"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "cartopy>=0.24.1",
+    "dash>=2.18.2",
+    "faiss-cpu>=1.10.0",
+    "flask>=3.0.3",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.1",
+    "netcdf4>=1.7.2",
+    "pandas>=2.2.3",
+    "plotly>=6.0.0",
+    "tqdm>=4.67.1",
+    "xarray>=2025.1.2",
+]
