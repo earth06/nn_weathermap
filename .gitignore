@@ -133,3 +133,6 @@ data/**/*.csv
 data/netcdf
 index/weathermap.index
 nn_weathermap/data/netcdf
+nn_weathermap/model/model_2d_cnn.pt
+nn_weathermap/date2index.parquet
+nn_weathermap/model/scaler.pkl
