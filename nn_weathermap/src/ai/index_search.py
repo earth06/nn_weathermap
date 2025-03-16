@@ -24,7 +24,8 @@ class IndexSearch:
         self.index2datetime = pd.read_parquet(
             f"{self.model_path}/index/index2datetime.parquet"
         )
-        self.scaler = pickle.load(f"{self.model_path}/scaler.pkl")
+        with open(f"{self.model_path}/scaler.pkl", "br") as f:
+            self.scaler = pickle.load(f)
         self.model = Simple2DCNN()
         check_point = torch.load(f"{self.model_path}/model_2d_cnn.pt")
         self.model.load_state_dict(check_point["model_state_dict"])
@@ -40,7 +41,7 @@ class IndexSearch:
             pickle.dump(self.scaler, f)
         # NNの保存、学習を入れるならoptimizerの保存等も追加する必要がある
         torch.save(
-            {{"model_state_dict": self.model.state_dict()}},
+            {"model_state_dict": self.model.state_dict()},
             f"{self.model_path}/model_2d_cnn.pt",
         )
 
@@ -111,9 +112,9 @@ class IndexSearch:
 
     # 4. 類似度の計算と出力
     def find_similar_data(self, data_predict):
-        input_tensor = torch.Tensor(data_predict)
+        input_tensor = torch.Tensor(data_predict[0, :, :, :])
         input_features = self.extract_features(input_tensor, self.model)
         D, I = self.weather_index.search(np.array(input_features), 1)
         most_similar_data_index = I[0][0]
-        similar_dates = self.index2datetime[most_similar_data_index]
+        similar_dates = self.index2datetime.loc[most_similar_data_index]
         return similar_dates
