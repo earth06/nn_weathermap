@@ -10,7 +10,7 @@ from src.ai.nn import MinMaxScaler, Simple2DCNN
 
 class IndexSearch:
     def __init__(self):
-        self.weather_index = None
+        self.weather_index:faiss.IndexFlatL2 = None
         self.index2datetime = None
         self.scaler: MinMaxScaler = None
         self.model: Simple2DCNN = None
@@ -84,10 +84,10 @@ class IndexSearch:
         # 検索indexを保存する
         self.write_weather_index()
 
-    def predict(self, ds):
+    def predict(self, ds, n_top=1):
         """すでにscaler, model, indexがセット済みのときにのみ動作する"""
         predict_data = self.preprocess(ds)
-        similar_dates = self.find_similar_data(predict_data)
+        similar_dates = self.find_similar_data(predict_data, n_top=n_top)
         return similar_dates
 
     def create_index(self, data_train, datetimes_train):
@@ -111,10 +111,13 @@ class IndexSearch:
         return features.numpy()
 
     # 4. 類似度の計算と出力
-    def find_similar_data(self, data_predict):
+    def find_similar_data(self, data_predict, n_top=1):
         input_tensor = torch.Tensor(data_predict[0, :, :, :])
         input_features = self.extract_features(input_tensor, self.model)
-        D, I = self.weather_index.search(np.array(input_features), 1)
-        most_similar_data_index = I[0][0]
-        similar_dates = self.index2datetime.loc[most_similar_data_index]
+        # 距離とそのIndex番号を返す
+        D, I = self.weather_index.search(np.array(input_features), n_top)
+        most_similar_data_index = I[0]
+        similar_dates=[
+             self.index2datetime.loc[i][0] for i in most_similar_data_index
+        ]
         return similar_dates
