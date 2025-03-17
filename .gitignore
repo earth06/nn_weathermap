@@ -131,8 +131,8 @@ data/**/*.csv
 *.jpg
 
 data/netcdf
-index/weathermap.index
+nn_weathermap/model/index/weathermap.index
 nn_weathermap/data/netcdf
 nn_weathermap/model/model_2d_cnn.pt
-nn_weathermap/date2index.parquet
 nn_weathermap/model/scaler.pkl
+nn_weathermap/model/index/index2datetime.parquet
