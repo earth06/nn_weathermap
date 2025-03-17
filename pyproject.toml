@@ -16,6 +16,9 @@ dependencies = [
     "netcdf4>=1.7.2",
     "pandas>=2.2.3",
     "plotly>=6.0.0",
+    "torch>=2.6.0",
+    "torchaudio>=2.6.0",
+    "torchvision>=0.21.0",
     "tqdm>=4.67.1",
     "xarray>=2025.1.2",
 ]
