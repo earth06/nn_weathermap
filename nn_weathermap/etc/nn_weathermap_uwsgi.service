@@ -1,0 +1,15 @@
+[Unit]
+Description = uWSGI
+After = syslog.target
+
+[Service]
+ExecStartPre=/usr/bin/cd　/home/XXXX/repos/nn_weathermap/nn_weathermap
+ExecStart= /home/XXXX/repos/nn_weathermap/.venv/bin/uwsgi --ini /home/XXXX/repos/nn_weathermap/nn_weathermap/src/app/app.ini
+ExecStop=/bin/kill -INT ${MAINPID}
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target

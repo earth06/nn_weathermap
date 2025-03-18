@@ -17,6 +17,7 @@ dependencies = [
     "pandas>=2.2.3",
     "plotly>=6.0.0",
     "pyarrow>=19.0.1",
+    "pyuwsgi>=2.0.28.post1",
     "torch>=2.6.0",
     "torchaudio>=2.6.0",
     "torchvision>=0.21.0",
