@@ -50,5 +50,4 @@ def get_options():
 if __name__=="__main__":
     import os
     print(os.getcwd())
-    app.debug=True
     app.run()
